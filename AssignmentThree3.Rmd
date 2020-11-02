@@ -1,0 +1,52 @@
+---
+title: "Assignment Three"
+author:
+- Arian Steen
+- Anne Grete Lilleland
+date: "30 10 2020"
+output:
+  pdf_document: default
+  html_notebook: default
+  html_document: default
+subtitle: HVL DS 2020
+---
+
+```{r include=FALSE}
+options(scipen = 999)
+library(gapminder)
+library(knitr)
+library(tidyverse)
+library(corrplot)
+```
+
+# The Data
+
+The data that we are going to use in this report is taken from the official Gapminder website. Containing local and global statistics from several hundrer sources. Including but not limited to : Geographical data, Income data, age statistics and population,density data. 
+
+# The Report
+
+Our assignment report will include the explanation of the code used in this report, in order to analyze and look at the data imported from 'Gapminder-Systema_Globalis'. 
+
+We will aim at answering questions regarding the data, some of the questions are written below:  
+
+- What information does the file ddf_concepts.csv contain? 
+
+- What information does the file ddf--entities--geo--country.csv contain? 
+
+- What information does the file ddf--entities--geo--un_sdg_region.csv contain?
+
+We will also recreate the variable 'Continent', with the new data. We will only include countries that have a iso3166_1_alpha3 code. 
+
+We will also show the graphical plots used within our report. 
+Our report will include the code writting within the IDE for R 'Rstudio' and work within the 'tidy data' framework as our focuspoint. 
+
+# Explaining the information
+
+What information does *'ddf_concepts.csv'* contain? : 
+
+What information does *'ddf--entities--geo--country.csv'* contain? : 
+
+What information does *'ddf--entities--geo--un_sdg_region.csv'* contain? : 
+
+
+
