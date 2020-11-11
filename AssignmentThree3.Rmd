@@ -77,11 +77,43 @@ print(ddf_entities_geo_un_sdg_region)
 
 *Recreate the continent variable with the new data.   Only include countries that have aiso3166_1_alpha3code.  Use data from ddf--entities--geo--country.csv and call this tibble g_c. Let g_c be your main tibble in the following, i.e. add variables to this tibble.*
 
-```{r echo=TRUE} 
+```{r}
+# We use readr to load the csv file and then create a new continent variable called g_c
 g_c <- read_csv("C:/Users/ASCUSERADMIN/Documents/RMASTER/AssignmentThree/Data/ddf--gapminder--systema_globalis/ddf--entities--geo--country.csv")
-print(g_c)
+print(g_c) # The print function pertaining to tibbles is useful in our case. 
 ```
-# Above we have created a new variable with data from ddf_editites-geo-country.csv
+Above we have created a new variable with data from ddf_editites-geo-country.csv called g_c, this is unfiltered with the same data
+
+We will now filter out the countries that have iso3166_1_alpha3code. This is an international stand ISO code pertaining to countries/geographical locations. We use the filtering option to extract this information from the first data set (ddf_entities_geo_country.csv)
+
+```{r}
+# This code helps us filter out countries in our dataset that fit the iso3166_1_alpha3 ISO standard. We use mutate, filter and is.na functions. 
+g_c <- g_c %>%
+  mutate(continent = case_when(
+    world_4region == "asia" & un_sdg_region %in% c("un_australia_and_new_zealand", "un_oceania_exc_australia_and_new_zealand") ~ "Oceania",
+    world_4region ==  "asia" & !(un_sdg_region %in% c("un_australia_and_new_zealand", "un_oceania_exc_australia_and_new_zealand")) ~ "Asia",
+    world_4region == "europe" ~ "Europe",
+    world_4region == "africa" ~ "Africa",
+    world_4region ==  "americas" ~ "Americas")
+  ) %>%
+ filter(!is.na(iso3166_1_alpha3))
+```
+
+We have now filtered out the countries with that particular code. 
+
+## 5 How many countries are there now? 
+
+```{r} 
+unique(g_c) # This function shows us the number and length of g_c.
+
+length(g_c) # This function shows us the number of variables pertaining to g_c.
+```
+
+As we can see, *we now have 247 observations* and 22 variables to work with (We started with 273 observations and 21 variables). We have now filtered out the countries with iso3166_1_alpha3 code. This means that *26 countries in our data did not fit the iso3166_1_alpha3code.* **There are now 247 countries that fit the isocode.** 
+
+## 6 Adding a new variable 
+
+
 
 
 

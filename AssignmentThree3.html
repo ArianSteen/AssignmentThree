@@ -401,18 +401,98 @@ summary {
 <div id="the-assignment" class="section level1">
 <h1>The Assignment</h1>
 <div id="what-information-does-ddf_concepts.csv-contain" class="section level2">
-<h2>What information does <em>‘ddf_concepts.csv’</em> contain? :</h2>
+<h2>1 What information does <em>‘ddf_concepts.csv’</em> contain? :</h2>
 <p>This file contains certain information collected within the dataset, including the source url and description of the data collected. This file is used to explain the gapminder datafile we are going to use in our report, as such this is purely an explanatory text file that does not contain statistics, numbers or other variables.</p>
 <p>The total number of observations within the file is 596 with 17 variable columns, the different description-variables includes name, catalog , short description , url of the source and type of measurements done.</p>
 </div>
 <div id="what-information-does-ddfentitiesgeocountry.csv-contain" class="section level2">
-<h2>What information does <em>‘ddf–entities–geo–country.csv’</em> contain? :</h2>
+<h2>2 What information does <em>‘ddf–entities–geo–country.csv’</em> contain? :</h2>
 <p>This file contains certain information about different countries, the different variables include income, religion , region and wheter or not the country is landlocked (Access to a coastline within the borders of the country). This file contains 273 observations, and 21 variable columns.</p>
 </div>
 <div id="what-information-does-ddfentitiesgeoun_sdg_region.csv-contain" class="section level2">
-<h2>What information does <em>‘ddf–entities–geo–un_sdg_region.csv’</em> contain? :</h2>
+<h2>3 What information does <em>‘ddf–entities–geo–un_sdg_region.csv’</em> contain? :</h2>
 <p>This file contains information about different continents and countries, there are 8 regions in this file, each with their own unique color to make it easier to distinguish between them in a graphical setting.</p>
 <p>A sample from the file would be : un_europe_and_northern_america this would be the regions of Europe and Northern America, with its own unique color to make displaying the data easier in a graphical setting.</p>
+</div>
+<div id="recreating-the-continent-variable." class="section level2">
+<h2>4 Recreating the continent variable.</h2>
+<p><em>Recreate the continent variable with the new data. Only include countries that have aiso3166_1_alpha3code. Use data from ddf–entities–geo–country.csv and call this tibble g_c. Let g_c be your main tibble in the following, i.e. add variables to this tibble.</em></p>
+<pre class="r"><code># We use readr to load the csv file and then create a new continent variable called g_c
+g_c &lt;- read_csv(&quot;C:/Users/ASCUSERADMIN/Documents/RMASTER/AssignmentThree/Data/ddf--gapminder--systema_globalis/ddf--entities--geo--country.csv&quot;)</code></pre>
+<pre><code>## 
+## -- Column specification --------------------------------------------------------
+## cols(
+##   .default = col_character(),
+##   `is--country` = col_logical(),
+##   iso3166_1_numeric = col_double(),
+##   latitude = col_double(),
+##   longitude = col_double(),
+##   un_state = col_logical()
+## )
+## i Use `spec()` for the full column specifications.</code></pre>
+<pre class="r"><code>print(g_c)</code></pre>
+<pre><code>## # A tibble: 273 x 21
+##    country g77_and_oecd_co~ income_3groups income_groups `is--country`
+##    &lt;chr&gt;   &lt;chr&gt;            &lt;chr&gt;          &lt;chr&gt;         &lt;lgl&gt;        
+##  1 abkh    others           &lt;NA&gt;           &lt;NA&gt;          TRUE         
+##  2 abw     others           high_income    high_income   TRUE         
+##  3 afg     g77              low_income     low_income    TRUE         
+##  4 ago     g77              middle_income  lower_middle~ TRUE         
+##  5 aia     others           &lt;NA&gt;           &lt;NA&gt;          TRUE         
+##  6 akr_a_~ others           &lt;NA&gt;           &lt;NA&gt;          TRUE         
+##  7 ala     others           &lt;NA&gt;           &lt;NA&gt;          TRUE         
+##  8 alb     others           middle_income  upper_middle~ TRUE         
+##  9 and     others           high_income    high_income   TRUE         
+## 10 ant     others           &lt;NA&gt;           &lt;NA&gt;          TRUE         
+## # ... with 263 more rows, and 16 more variables: iso3166_1_alpha2 &lt;chr&gt;,
+## #   iso3166_1_alpha3 &lt;chr&gt;, iso3166_1_numeric &lt;dbl&gt;, iso3166_2 &lt;chr&gt;,
+## #   landlocked &lt;chr&gt;, latitude &lt;dbl&gt;, longitude &lt;dbl&gt;,
+## #   main_religion_2008 &lt;chr&gt;, name &lt;chr&gt;, un_sdg_ldc &lt;chr&gt;,
+## #   un_sdg_region &lt;chr&gt;, un_state &lt;lgl&gt;, unicef_region &lt;chr&gt;,
+## #   unicode_region_subtag &lt;chr&gt;, world_4region &lt;chr&gt;, world_6region &lt;chr&gt;</code></pre>
+<p>Above we have created a new variable with data from ddf_editites-geo-country.csv called g_c, this is unfiltered with the same data</p>
+<p>We will now filter out the countries that have iso3166_1_alpha3code. This is an international stand ISO code pertaining to countries/geographical locations. We use the filtering option to extract this information from the first data set (ddf_entities_geo_country.csv)</p>
+<pre class="r"><code># This code helps us filter out countries in our dataset that fit the iso3166_1_alpha3 ISO standard. We use mutate, filter and is.na functions. 
+g_c &lt;- g_c %&gt;%
+  mutate(continent = case_when(
+    world_4region == &quot;asia&quot; &amp; un_sdg_region %in% c(&quot;un_australia_and_new_zealand&quot;, &quot;un_oceania_exc_australia_and_new_zealand&quot;) ~ &quot;Oceania&quot;,
+    world_4region ==  &quot;asia&quot; &amp; !(un_sdg_region %in% c(&quot;un_australia_and_new_zealand&quot;, &quot;un_oceania_exc_australia_and_new_zealand&quot;)) ~ &quot;Asia&quot;,
+    world_4region == &quot;europe&quot; ~ &quot;Europe&quot;,
+    world_4region == &quot;africa&quot; ~ &quot;Africa&quot;,
+    world_4region ==  &quot;americas&quot; ~ &quot;Americas&quot;)
+  ) %&gt;%
+ filter(!is.na(iso3166_1_alpha3))</code></pre>
+<p>We have now filtered out the countries with that particular code.</p>
+</div>
+<div id="how-many-countries-are-there-now" class="section level2">
+<h2>5 How many countries are there now?</h2>
+<pre class="r"><code>unique(g_c) # This function shows us the number and length of g_c.</code></pre>
+<pre><code>## # A tibble: 247 x 22
+##    country g77_and_oecd_co~ income_3groups income_groups `is--country`
+##    &lt;chr&gt;   &lt;chr&gt;            &lt;chr&gt;          &lt;chr&gt;         &lt;lgl&gt;        
+##  1 abw     others           high_income    high_income   TRUE         
+##  2 afg     g77              low_income     low_income    TRUE         
+##  3 ago     g77              middle_income  lower_middle~ TRUE         
+##  4 aia     others           &lt;NA&gt;           &lt;NA&gt;          TRUE         
+##  5 ala     others           &lt;NA&gt;           &lt;NA&gt;          TRUE         
+##  6 alb     others           middle_income  upper_middle~ TRUE         
+##  7 and     others           high_income    high_income   TRUE         
+##  8 are     g77              high_income    high_income   TRUE         
+##  9 arg     g77              middle_income  upper_middle~ TRUE         
+## 10 arm     others           middle_income  upper_middle~ TRUE         
+## # ... with 237 more rows, and 17 more variables: iso3166_1_alpha2 &lt;chr&gt;,
+## #   iso3166_1_alpha3 &lt;chr&gt;, iso3166_1_numeric &lt;dbl&gt;, iso3166_2 &lt;chr&gt;,
+## #   landlocked &lt;chr&gt;, latitude &lt;dbl&gt;, longitude &lt;dbl&gt;,
+## #   main_religion_2008 &lt;chr&gt;, name &lt;chr&gt;, un_sdg_ldc &lt;chr&gt;,
+## #   un_sdg_region &lt;chr&gt;, un_state &lt;lgl&gt;, unicef_region &lt;chr&gt;,
+## #   unicode_region_subtag &lt;chr&gt;, world_4region &lt;chr&gt;, world_6region &lt;chr&gt;,
+## #   continent &lt;chr&gt;</code></pre>
+<pre class="r"><code>length(g_c) # This function shows us the number of variables pertaining to g_c.</code></pre>
+<pre><code>## [1] 22</code></pre>
+<p>As we can see, <em>we now have 247 observations</em> and 22 variables to work with (We started with 273 observations and 21 variables). We have now filtered out the countries with iso3166_1_alpha3 code. This means that <em>26 countries in our data did not fit the iso3166_1_alpha3code.</em> <strong>There are now 247 countries that fit the isocode.</strong></p>
+</div>
+<div id="adding-a-new-variable" class="section level2">
+<h2>6 Adding a new variable</h2>
 </div>
 </div>
 
