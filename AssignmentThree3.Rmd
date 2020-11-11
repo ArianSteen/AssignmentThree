@@ -5,9 +5,9 @@ author:
 - Anne Grete Lilleland
 date: "30 10 2020"
 output:
-  pdf_document: default
-  html_notebook: default
   html_document: default
+  html_notebook: default
+  pdf_document: default
 subtitle: HVL DS 2020
 ---
 
@@ -17,11 +17,9 @@ library(gapminder)
 library(knitr)
 library(tidyverse)
 library(corrplot)
+library(dplyr)
+library(readr)
 ```
-
-# The Data
-
-The data that we are going to use in this report is taken from the official Gapminder website. Containing local and global statistics from several hundrer sources. Including but not limited to : Geographical data, Income data, age statistics and population,density data. 
 
 # The Report
 
@@ -37,16 +35,31 @@ We will aim at answering questions regarding the data, some of the questions are
 
 We will also recreate the variable 'Continent', with the new data. We will only include countries that have a iso3166_1_alpha3 code. 
 
-We will also show the graphical plots used within our report. 
+We will also show the graphics/plots used within our report. 
 Our report will include the code writting within the IDE for R 'Rstudio' and work within the 'tidy data' framework as our focuspoint. 
 
-# Explaining the information
+We are going to write our report in English as to streamline the workflow between the book 'R for Everyone' our own report and make the repport more accessible.
 
-What information does *'ddf_concepts.csv'* contain? : 
+# The Data
 
-What information does *'ddf--entities--geo--country.csv'* contain? : 
+The data that we are going to use in this report is taken from the official Gapminder website. Containing local and global statistics from several hundrer sources. Including but not limited to : Geographical data, Income data, age statistics and population,density data. 
 
-What information does *'ddf--entities--geo--un_sdg_region.csv'* contain? : 
+# The Assignment 
 
+## What information does *'ddf_concepts.csv'* contain? : 
+
+This file contains certain information collected within the dataset, including the source url and description of the data collected. This file is used to explain the gapminder datafile we are going to use in our report, as such this is purely an explanatory text file that does not contain statistics, numbers or other variables.
+
+The total number of observations within the file is 596 with 17 variable columns, the different description-variables includes name, catalog , short description , url of the source and type of measurements done. 
+
+## What information does *'ddf--entities--geo--country.csv'* contain? : 
+
+This file contains certain information about different countries, the different variables include income, religion , region and wheter or not the country is landlocked (Access to a coastline within the borders of the country). This file contains 273 observations, and 21 variable columns.
+
+## What information does *'ddf--entities--geo--un_sdg_region.csv'* contain? : 
+
+This file contains information about different continents and countries, there are 8 regions in this file, each with their own unique color to make it easier to distinguish between them in a graphical setting. 
+
+A sample from the file would be : un_europe_and_northern_america this would be the regions of Europe and Northern America, with its own unique color to make displaying the data easier in a graphical setting. 
 
 
