@@ -5,9 +5,9 @@ author:
 - Anne Grete Lilleland
 date: "30 10 2020"
 output:
-  html_document: default
-  html_notebook: default
   pdf_document: default
+  html_notebook: default
+  html_document: default
 subtitle: HVL DS 2020
 ---
 
@@ -27,7 +27,7 @@ Our assignment report will include the explanation of the code used in this repo
 
 We will aim at answering questions regarding the data, some of the questions are written below:  
 
-- What information does the file ddf_concepts.csv contain? 
+- What information does the file ddf_concepts.cssv contain? 
 
 - What information does the file ddf--entities--geo--country.csv contain? 
 
@@ -46,20 +46,43 @@ The data that we are going to use in this report is taken from the official Gapm
 
 # The Assignment 
 
-## What information does *'ddf_concepts.csv'* contain? : 
+## 1 What information does *'ddf_concepts.csv'* contain? : 
 
 This file contains certain information collected within the dataset, including the source url and description of the data collected. This file is used to explain the gapminder datafile we are going to use in our report, as such this is purely an explanatory text file that does not contain statistics, numbers or other variables.
 
 The total number of observations within the file is 596 with 17 variable columns, the different description-variables includes name, catalog , short description , url of the source and type of measurements done. 
+```{r eval=FALSE, include=FALSE}
+print(ddf_entities_geo_country)
+```
 
-## What information does *'ddf--entities--geo--country.csv'* contain? : 
+
+## 2 What information does *'ddf--entities--geo--country.csv'* contain? : 
 
 This file contains certain information about different countries, the different variables include income, religion , region and wheter or not the country is landlocked (Access to a coastline within the borders of the country). This file contains 273 observations, and 21 variable columns.
+```{r eval=FALSE, include=FALSE}
+print(ddf_entities_geo_country)
+```
 
-## What information does *'ddf--entities--geo--un_sdg_region.csv'* contain? : 
+
+## 3 What information does *'ddf--entities--geo--un_sdg_region.csv'* contain? : 
 
 This file contains information about different continents and countries, there are 8 regions in this file, each with their own unique color to make it easier to distinguish between them in a graphical setting. 
 
 A sample from the file would be : un_europe_and_northern_america this would be the regions of Europe and Northern America, with its own unique color to make displaying the data easier in a graphical setting. 
+```{r eval=FALSE, include=FALSE}
+print(ddf_entities_geo_un_sdg_region)
+```
+
+## 4 Recreating the continent variable. 
+
+*Recreate the continent variable with the new data.   Only include countries that have aiso3166_1_alpha3code.  Use data from ddf--entities--geo--country.csv and call this tibble g_c. Let g_c be your main tibble in the following, i.e. add variables to this tibble.*
+
+```{r echo=TRUE} 
+g_c <- read_csv("C:/Users/ASCUSERADMIN/Documents/RMASTER/AssignmentThree/Data/ddf--gapminder--systema_globalis/ddf--entities--geo--country.csv")
+print(g_c)
+```
+# Above we have created a new variable with data from ddf_editites-geo-country.csv
+
+
 
 
