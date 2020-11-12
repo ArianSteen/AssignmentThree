@@ -430,7 +430,7 @@ g_c &lt;- read_csv(&quot;C:/Users/ASCUSERADMIN/Documents/RMASTER/AssignmentThree
 ##   un_state = col_logical()
 ## )
 ## i Use `spec()` for the full column specifications.</code></pre>
-<pre class="r"><code>print(g_c)</code></pre>
+<pre class="r"><code>print(g_c) # The print function pertaining to tibbles is useful in our case. </code></pre>
 <pre><code>## # A tibble: 273 x 21
 ##    country g77_and_oecd_co~ income_3groups income_groups `is--country`
 ##    &lt;chr&gt;   &lt;chr&gt;            &lt;chr&gt;          &lt;chr&gt;         &lt;lgl&gt;        
@@ -487,12 +487,39 @@ g_c &lt;- g_c %&gt;%
 ## #   un_sdg_region &lt;chr&gt;, un_state &lt;lgl&gt;, unicef_region &lt;chr&gt;,
 ## #   unicode_region_subtag &lt;chr&gt;, world_4region &lt;chr&gt;, world_6region &lt;chr&gt;,
 ## #   continent &lt;chr&gt;</code></pre>
-<pre class="r"><code>length(g_c) # This function shows us the number of variables pertaining to g_c.</code></pre>
-<pre><code>## [1] 22</code></pre>
+<pre class="r"><code>length(g_c$name) # This function shows us the number of variables (22) pertaining to g_c.</code></pre>
+<pre><code>## [1] 247</code></pre>
 <p>As we can see, <em>we now have 247 observations</em> and 22 variables to work with (We started with 273 observations and 21 variables). We have now filtered out the countries with iso3166_1_alpha3 code. This means that <em>26 countries in our data did not fit the iso3166_1_alpha3code.</em> <strong>There are now 247 countries that fit the isocode.</strong></p>
 </div>
+<div id="number-of-countries-in-each-continent" class="section level2">
+<h2>6 Number of countries in each continent?</h2>
+<pre class="r"><code>g_c %&gt;% 
+    count(continent)</code></pre>
+<pre><code>## # A tibble: 5 x 2
+##   continent     n
+##   &lt;chr&gt;     &lt;int&gt;
+## 1 Africa       59
+## 2 Americas     55
+## 3 Asia         47
+## 4 Europe       58
+## 5 Oceania      28</code></pre>
+<pre class="r"><code># Using the count function we can show how many countries there are in each continent
+contnumbercountries &lt;- c(59,55,47,58,28)
+mean(contnumbercountries)</code></pre>
+<pre><code>## [1] 49.4</code></pre>
+<p>In the following order: 59,55,47,58,28 countries in Africa,Americas,Asia,Europe and Oceania</p>
+</div>
 <div id="adding-a-new-variable" class="section level2">
-<h2>6 Adding a new variable</h2>
+<h2>7 Adding a new variable</h2>
+<pre class="r"><code>lifeExp &lt;-read_csv(&quot;Data/ddf--gapminder--systema_globalis/countries-etc-datapoints/ddf--datapoints--life_expectancy_years--by--geo--time.csv&quot;,col_types =cols(time =col_date(format = &quot;%Y&quot;)))
+lifeExp &lt;- lifeExp%&gt;%  
+rename(year = time)
+length(unique(lifeExp$geo))</code></pre>
+<pre><code>## [1] 189</code></pre>
+<p>After importing the data, there are 189 countries with information about Life Expectancy (lifeExp).</p>
+</div>
+<div id="section" class="section level2">
+<h2>8</h2>
 </div>
 </div>
 

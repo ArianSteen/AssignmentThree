@@ -5,9 +5,9 @@ author:
 - Anne Grete Lilleland
 date: "30 10 2020"
 output:
-  pdf_document: default
-  html_notebook: default
   html_document: default
+  html_notebook: default
+  pdf_document: default
 subtitle: HVL DS 2020
 ---
 
@@ -106,14 +106,35 @@ We have now filtered out the countries with that particular code.
 ```{r} 
 unique(g_c) # This function shows us the number and length of g_c.
 
-length(g_c) # This function shows us the number of variables pertaining to g_c.
+length(g_c$name) # This function shows us the number of variables (22) pertaining to g_c.
 ```
 
 As we can see, *we now have 247 observations* and 22 variables to work with (We started with 273 observations and 21 variables). We have now filtered out the countries with iso3166_1_alpha3 code. This means that *26 countries in our data did not fit the iso3166_1_alpha3code.* **There are now 247 countries that fit the isocode.** 
 
-## 6 Adding a new variable 
+## 6 Number of countries in each continent?  
 
+```{r} 
+g_c %>% 
+    count(continent)
+# Using the count function we can show how many countries there are in each continent
+contnumbercountries <- c(59,55,47,58,28)
+mean(contnumbercountries)
+```
 
+In the following order: 59,55,47,58,28 countries in Africa,Americas,Asia,Europe and Oceania
+
+## 7 Adding a new variable
+
+```{r} 
+lifeExp <-read_csv("Data/ddf--gapminder--systema_globalis/countries-etc-datapoints/ddf--datapoints--life_expectancy_years--by--geo--time.csv",col_types =cols(time =col_date(format = "%Y")))
+lifeExp <- lifeExp%>%  
+rename(year = time)
+length(unique(lifeExp$geo))
+```
+
+After importing the data, there are 189 countries with information about Life Expectancy (lifeExp).
+
+## 8
 
 
 
