@@ -5,14 +5,13 @@ author:
 - Anne Grete Lilleland
 date: "30 10 2020"
 output:
-  html_document: default
-  html_notebook: default
   pdf_document: default
+  html_notebook: default
+  html_document: default
 subtitle: HVL DS 2020
 ---
 
 ```{r include=FALSE}
-options(scipen = 999)
 library(gapminder)
 library(knitr)
 library(tidyverse)
@@ -134,9 +133,25 @@ length(unique(lifeExp$geo))
 
 After importing the data, there are 189 countries with information about Life Expectancy (lifeExp).
 
-## 8
+## 8 Reducing g_c variables
 
-## 9
+```{r}
+names(g_c) # Here we can see the current variables in our file. We can further pull out the ones we are more likely to use in our report. 
+```
+We are now going to reduce g_c to the variables: country, name, iso3166_1_alpha3, main_religion_2008, un_sdg_region,world_4region, continent, world_6region.
+
+
+```{r}
+g_c <- g_c%>% # Here we are selecting the different variables and pulling them out of the data
+    select(country, name, iso3166_1_alpha3, main_religion_2008, un_sdg_region, world_4region, continent,     world_6region) %>%
+    left_join(lifeExp, by =c("country" = "geo")) %>%
+    filter(!(is.na(year)& is.na(life_expectancy_years))) %>%
+    filter(year<"2020-01-01")
+```
+
+
+## 9 Observations on life expectancy
+
 
 ## 10
 
@@ -153,6 +168,4 @@ After importing the data, there are 189 countries with information about Life Ex
 ## 16
 
 ## 17
-
-## 18
 
