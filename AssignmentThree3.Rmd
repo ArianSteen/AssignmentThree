@@ -144,7 +144,8 @@ We are now going to reduce g_c to the variables: country, name, iso3166_1_alpha3
 ```{r}
 g_c <- g_c%>% # Here we are selecting the different variables and pulling them out of the data
     select(country, name, iso3166_1_alpha3, main_religion_2008, un_sdg_region, world_4region, continent,     world_6region) %>%
-    left_join(lifeExp, by =c("country" = "geo")) %>%
+    
+  left_join(lifeExp, by =c("country" = "geo")) %>%
     filter(!(is.na(year)& is.na(life_expectancy_years))) %>%
     filter(year<"2020-01-01")
 ```
@@ -152,18 +153,37 @@ g_c <- g_c%>% # Here we are selecting the different variables and pulling them o
 
 ## 9 Observations on life expectancy
 
+```{r}
+g_c_bruh <- g_c %>% # We can filter out life expectancy from our data. Finding the countries with the three lowest. 
+  group_by(country) %>%
+  summarise(min_year = min(year)) 
+attach(g_c_bruh)
+table(min_year)
 
-## 10
+g_c_bruh %>% 
+    filter(min_year == "1970-01-01")
 
-## 11
+g_c_bruh <- g_c_bruh %>%
+  left_join(g_c,
+            by = "country") %>%
+  filter(min_year == "1970-01-01")
+attach(g_c_bruh)
+tibble(country = unique(name))
+```
 
-## 12
+We can see that the countries with the lowest life expectancies are Andorra,Dominica and Marshall Islands. There is a small correlation between landlocked countries/Island nations and lower quality of life overall. 
 
-## 13
+## 10 Reading in population
 
-## 14
+## 11 Let u_pop be urban population. Import urban_population and left_join with g_c
 
-## 15
+## 12 Reading in gdp_percapita_us_inflation_adjusted 
+
+## 13 Making a gapminder-like dataset
+
+## 14 Making subset of gapminder
+
+## 15 
 
 ## 16
 
