@@ -1,8 +1,8 @@
 ---
 title: "Assignment Three"
 author:
-- Arian Steen
 - Anne Grete Lilleland
+- Arian Steen
 date: "30 10 2020"
 output:
   pdf_document: default
@@ -144,8 +144,7 @@ We are now going to reduce g_c to the variables: country, name, iso3166_1_alpha3
 ```{r}
 g_c <- g_c%>% # Here we are selecting the different variables and pulling them out of the data
     select(country, name, iso3166_1_alpha3, main_religion_2008, un_sdg_region, world_4region, continent,     world_6region) %>%
-    
-  left_join(lifeExp, by =c("country" = "geo")) %>%
+      left_join(lifeExp, by =c("country" = "geo")) %>%
     filter(!(is.na(year)& is.na(life_expectancy_years))) %>%
     filter(year<"2020-01-01")
 ```
@@ -155,6 +154,7 @@ g_c <- g_c%>% # Here we are selecting the different variables and pulling them o
 
 ```{r}
 g_c_bruh <- g_c %>% # We can filter out life expectancy from our data. Finding the countries with the three lowest. 
+  
   group_by(country) %>%
   summarise(min_year = min(year)) 
 attach(g_c_bruh)
@@ -167,25 +167,82 @@ g_c_bruh <- g_c_bruh %>%
   left_join(g_c,
             by = "country") %>%
   filter(min_year == "1970-01-01")
+
 attach(g_c_bruh)
 tibble(country = unique(name))
 ```
 
 We can see that the countries with the lowest life expectancies are Andorra,Dominica and Marshall Islands. There is a small correlation between landlocked countries/Island nations and lower quality of life overall. 
 
-## 10 Reading in population
+## 10 & 11 Reading in population
 
-## 11 Let u_pop be urban population. Import urban_population and left_join with g_c
+```{r}
+pop <- read_csv("~/RMASTER/AssignmentThree/Data/ddf--gapminder--systema_globalis/countries-etc-datapoints/ddf--datapoints--population_total--by--geo--time.csv",
+col_types = cols(time = col_date(format = "%Y")))
+
+g_c <- g_c%>% 
+    left_join(pop, by =c("country" = "geo", "year" = "time"))
+
+u_pop <- read_csv("Data/ddf--gapminder--systema_globalis/countries-etc-datapoints/ddf--datapoints--urban_population--by--geo--time.csv",
+col_types =cols(time =col_date(format = "%Y")))
+```
 
 ## 12 Reading in gdp_percapita_us_inflation_adjusted 
 
+```{r}
+gdp_percap <- read_csv("Data/ddf--gapminder--systema_globalis/countries-etc-datapoints/ddf--datapoints--gdppercapita_us_inflation_adjusted--by--geo--time.csv",
+    col_types = cols(time = col_date(format = "%Y")))
+g_c <- g_c %>%
+  left_join(gdp_percap, by = c("country" = "geo", "year" = "time"))
+```
+
 ## 13 Making a gapminder-like dataset
 
+ Feil her. 
+```{r eval=FALSE, include=FALSE}
+g_c <- g_c %>% 
+  rename("gdp_percap" = "t1") %>%
+  rename("lifeExp" = "t2") %>%
+  rename("pop" = "t3")
+resy <- paste(seq(1962, 2017, by = 5), "01-01", sep = "-") %>% 
+  parse_date(format = "%Y-%m-%d")
+gapminder1 <- g_c %>%
+  filter(year %in% resy) %>%
+  select(name, continent, year, lifeExp, pop, gdpPercap) %>%
+  rename("country" = "name")
+dim(gapminder1)
+```
+
 ## 14 Making subset of gapminder
+```{r eval=FALSE, include=FALSE}
+library(gapminder)
+data("gapminder")
+my_gapminder_1962 <- gapminderx1 %>% 
+  group_by(country) %>%
+  filter(year == "1962-01-01") %>%
+  filter(!is.na(gdpPercap)) 
+length(unique(my_gapminder_1962$country))
+```
 
 ## 15 
 
+```{r , eval=FALSE, include=FALSE}
+my_gapminder_1962 %>% 
+  ggplot(my_gapminder_1962, mapping=aes(x=gdpPercap, y=lifeExp, size=pop, colour=continent)) +
+  geom_point()+
+  ggtitle("1962 Gap")+
+  
+```
+
 ## 16
+
+```{r eval=FALSE, include=FALSE}
+my_gapminder_1962 %>%
+  ggplot(my_gampinder_1962, mapping = aes(x = log(gdpPercap), y = lifeExp, size = pop, colour = continent)) +
+  geom_point()+
+  coord_cartesian(xlim = c(5, 12), ylim = c(30, 100))
+```
 
 ## 17
 
+We know that asian countries have seen a significant improvement in life expectancy and gdp compared to most western countries, one could also expect higher life expectancy in richer countries
