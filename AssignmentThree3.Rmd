@@ -5,13 +5,17 @@ author:
 - Arian Steen
 date: "30 10 2020"
 output:
-  pdf_document: default
-  html_notebook: default
   html_document: default
+  html_notebook: default
+  pdf_document: default
 subtitle: HVL DS 2020
 ---
 
-```{r include=FALSE}
+
+```{r setup}
+# include = FALSE her gjør at disse ikke blir lastet
+# Navnet setup gjør at denne blir kjørt først når vi kjører en 
+# code-chunck
 library(gapminder)
 library(knitr)
 library(tidyverse)
@@ -78,8 +82,10 @@ print(ddf_entities_geo_un_sdg_region)
 
 ```{r}
 # We use readr to load the csv file and then create a new continent variable called g_c
-g_c <- read_csv("C:/Users/ASCUSERADMIN/Documents/RMASTER/AssignmentThree/Data/ddf--gapminder--systema_globalis/ddf--entities--geo--country.csv")
-print(g_c) # The print function pertaining to tibbles is useful in our case. 
+g_c <- read_csv(file = "Data/ddf--gapminder--systema_globalis/ddf--entities--geo--country.csv")
+# Ser ut til å være en dobbel assigment. Hvorfor?
+# Print er unødvendig
+g_c # The print function pertaining to tibbles is useful in our case. 
 ```
 Above we have created a new variable with data from ddf_editites-geo-country.csv called g_c, this is unfiltered with the same data
 
@@ -125,8 +131,11 @@ In the following order: 59,55,47,58,28 countries in Africa,Americas,Asia,Europe 
 ## 7 Adding a new variable
 
 ```{r} 
-lifeExp <-read_csv("Data/ddf--gapminder--systema_globalis/countries-etc-datapoints/ddf--datapoints--life_expectancy_years--by--geo--time.csv",col_types =cols(time =col_date(format = "%Y")))
-lifeExp <- lifeExp%>%  
+# Her er det relative stier og når jeg har lagt til datasettet
+# så virker dette
+# Ha space rundt =, + etc. så koden er etter tidyverse standard
+lifeExp <- read_csv("Data/ddf--gapminder--systema_globalis/countries-etc-datapoints/ddf--datapoints--life_expectancy_years--by--geo--time.csv",col_types = cols(time = col_date(format = "%Y")))
+lifeExp <- lifeExp %>%  
 rename(year = time)
 length(unique(lifeExp$geo))
 ```
@@ -177,7 +186,8 @@ We can see that the countries with the lowest life expectancies are Andorra,Domi
 ## 10 & 11 Reading in population
 
 ```{r}
-pop <- read_csv("~/RMASTER/AssignmentThree/Data/ddf--gapminder--systema_globalis/countries-etc-datapoints/ddf--datapoints--population_total--by--geo--time.csv",
+# Ny absolutt sti som jeg måtte fikse
+pop <- read_csv("Data/ddf--gapminder--systema_globalis/countries-etc-datapoints/ddf--datapoints--population_total--by--geo--time.csv",
 col_types = cols(time = col_date(format = "%Y")))
 
 g_c <- g_c%>% 

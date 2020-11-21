@@ -1,0 +1,15 @@
+---
+title: "ag_comments"
+output: html_notebook
+---
+
+# Kommentarer
+
+1.  Dere leser inn datafilen med en absolutt sti. Gjør at andre ikke kan generere dokumentet. Får feilmeldingen:
+
+```{=html}
+<!-- -->
+```
+    Quitting from lines 80-83 (AssignmentThree3.Rmd) Error: 'C:/Users/ASCUSERADMIN/Documents/RMASTER/AssignmentThree/Data/ddf–gapminder–systema_globalis/ddf–entities–geo–country.csv' does not exist. Execution halted
+
+For å komme videre
