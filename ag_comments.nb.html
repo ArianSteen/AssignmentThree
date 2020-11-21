@@ -1808,15 +1808,19 @@ summary {
 <div id="kommentarer" class="section level1">
 <h1>Kommentarer</h1>
 <ol style="list-style-type: decimal">
-<li>Dere leser inn datafilen med en absolutt sti. Gjør at andre ikke kan generere dokumentet. Får feilmeldingen:</li>
+<li>Håper at aglilleland har deltatt mer enn det som fremkommer av commit historien for det er heller skralt. En viktig del av disse øvingene er at dere skal lære å jobbe hver for dere og så synkronisere arbeidet vha. github.</li>
+<li>Dere leser inn datafilen med en absolutt sti. Dette gjør at andre ikke kan generere dokumentet. Får feilmeldingen:</li>
 </ol>
 <!-- -->
 <pre><code>Quitting from lines 80-83 (AssignmentThree3.Rmd) Error: &#39;C:/Users/ASCUSERADMIN/Documents/RMASTER/AssignmentThree/Data/ddf–gapminder–systema_globalis/ddf–entities–geo–country.csv&#39; does not exist. Execution halted</code></pre>
-<p>For å komme videre</p>
+<ol start="3" style="list-style-type: decimal">
+<li>Datasettet er ikke en del av prosjektet deres så dokumentet er ikke reproduserbart. Jeg har lagt til datasettet.</li>
+<li>Jeg har prøvd å fikse slutten slik at dere har data for de 90 landene. Se løsningsforslag for resten.</li>
+</ol>
 <!-- rnb-text-end -->
 </div>
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiYWdfY29tbWVudHMiCm91dHB1dDogaHRtbF9ub3RlYm9vawotLS0KCiMgS29tbWVudGFyZXIKCjEuICBEZXJlIGxlc2VyIGlubiBkYXRhZmlsZW4gbWVkIGVuIGFic29sdXR0IHN0aS4gR2rDuHIgYXQgYW5kcmUgaWtrZSBrYW4gZ2VuZXJlcmUgZG9rdW1lbnRldC4gRsOlciBmZWlsbWVsZGluZ2VuOgoKYGBgez1odG1sfQo8IS0tIC0tPgpgYGAKICAgIFF1aXR0aW5nIGZyb20gbGluZXMgODAtODMgKEFzc2lnbm1lbnRUaHJlZTMuUm1kKSBFcnJvcjogJ0M6L1VzZXJzL0FTQ1VTRVJBRE1JTi9Eb2N1bWVudHMvUk1BU1RFUi9Bc3NpZ25tZW50VGhyZWUvRGF0YS9kZGbigJNnYXBtaW5kZXLigJNzeXN0ZW1hX2dsb2JhbGlzL2RkZuKAk2VudGl0aWVz4oCTZ2Vv4oCTY291bnRyeS5jc3YnIGRvZXMgbm90IGV4aXN0LiBFeGVjdXRpb24gaGFsdGVkCgpGb3Igw6Uga29tbWUgdmlkZXJlCg==</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiYWdfY29tbWVudHMiCm91dHB1dDogaHRtbF9ub3RlYm9vawotLS0KCiMgS29tbWVudGFyZXIKCjEuICBIw6VwZXIgYXQgYWdsaWxsZWxhbmQgaGFyIGRlbHRhdHQgbWVyIGVubiBkZXQgc29tIGZyZW1rb21tZXIgYXYgY29tbWl0IGhpc3RvcmllbiBmb3IgZGV0IGVyIGhlbGxlciBza3JhbHQuIEVuIHZpa3RpZyBkZWwgYXYgZGlzc2Ugw7h2aW5nZW5lIGVyIGF0IGRlcmUgc2thbCBsw6ZyZSDDpSBqb2JiZSBodmVyIGZvciBkZXJlIG9nIHPDpSBzeW5rcm9uaXNlcmUgYXJiZWlkZXQgdmhhLiBnaXRodWIuCjIuICBEZXJlIGxlc2VyIGlubiBkYXRhZmlsZW4gbWVkIGVuIGFic29sdXR0IHN0aS4gRGV0dGUgZ2rDuHIgYXQgYW5kcmUgaWtrZSBrYW4gZ2VuZXJlcmUgZG9rdW1lbnRldC4gRsOlciBmZWlsbWVsZGluZ2VuOgoKPCEtLSAtLT4KCiAgICBRdWl0dGluZyBmcm9tIGxpbmVzIDgwLTgzIChBc3NpZ25tZW50VGhyZWUzLlJtZCkgRXJyb3I6ICdDOi9Vc2Vycy9BU0NVU0VSQURNSU4vRG9jdW1lbnRzL1JNQVNURVIvQXNzaWdubWVudFRocmVlL0RhdGEvZGRm4oCTZ2FwbWluZGVy4oCTc3lzdGVtYV9nbG9iYWxpcy9kZGbigJNlbnRpdGllc+KAk2dlb+KAk2NvdW50cnkuY3N2JyBkb2VzIG5vdCBleGlzdC4gRXhlY3V0aW9uIGhhbHRlZAoKMy4gIERhdGFzZXR0ZXQgZXIgaWtrZSBlbiBkZWwgYXYgcHJvc2pla3RldCBkZXJlcyBzw6UgZG9rdW1lbnRldCBlciBpa2tlIHJlcHJvZHVzZXJiYXJ0LiBKZWcgaGFyIGxhZ3QgdGlsIGRhdGFzZXR0ZXQuCjQuICBKZWcgaGFyIHByw7h2ZCDDpSBmaWtzZSBzbHV0dGVuIHNsaWsgYXQgZGVyZSBoYXIgZGF0YSBmb3IgZGUgOTAgbGFuZGVuZS4gU2UgbMO4c25pbmdzZm9yc2xhZyBmb3IgcmVzdGVuLgo=</div>
 
 
 

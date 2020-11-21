@@ -209,40 +209,93 @@ g_c <- g_c %>%
 ## 13 Making a gapminder-like dataset
 
  Feil her. 
-```{r eval=FALSE, include=FALSE}
+ 
+```{r}
+names(g_c)
+```
+ 
+ 
+```{r}
+# Dere kan ikke sette nytt navn på en variabel som ikke eksisterer
+# nytt_navn = eksisterende_navn
+# gdpPercap er navnet brukt i gapminder pakken
 g_c <- g_c %>% 
-  rename("gdp_percap" = "t1") %>%
-  rename("lifeExp" = "t2") %>%
-  rename("pop" = "t3")
+  select(-country) %>%  # country is 3 chr abbrivation
+  rename("country" = name) %>% 
+  rename("gdpPercap" = "gdppercapita_us_inflation_adjusted") %>%
+  rename("lifeExp" = "life_expectancy_years") %>%
+  rename("pop" = "population_total")
+
 resy <- paste(seq(1962, 2017, by = 5), "01-01", sep = "-") %>% 
   parse_date(format = "%Y-%m-%d")
+
 gapminder1 <- g_c %>%
-  filter(year %in% resy) %>%
-  select(name, continent, year, lifeExp, pop, gdpPercap) %>%
-  rename("country" = "name")
+    select(country, continent, year, lifeExp, pop, gdpPercap) %>%
+  filter(year %in% resy)
+
+  
 dim(gapminder1)
 ```
 
 ## 14 Making subset of gapminder
-```{r eval=FALSE, include=FALSE}
-library(gapminder)
-data("gapminder")
-my_gapminder_1962 <- gapminderx1 %>% 
-  group_by(country) %>%
+```{r}
+# tar bort  eval=FALSE, include=FALSE eller kjører ikke koden
+# the following gives you the countries with data for gdpPercap
+# in 1962. It´s reasonable to suppose that they have data for 
+# the followin years, but one have to check
+have_gdpPercap_1962 <- gapminder1 %>% 
   filter(year == "1962-01-01") %>%
-  filter(!is.na(gdpPercap)) 
-length(unique(my_gapminder_1962$country))
+  filter(!is.na(gdpPercap)) %>% 
+  select(country)
+
+dim(have_gdpPercap_1962)
 ```
+Slik dere definere my_gapminder_1962 får dere bare med data fra 1962. Vi ønsker data fra 1962 opp til idag. I have_gdpPercap_1962 har vi nå navnene på de landene som hadde gdpPercap data i 1962. Plukker disse ut fra gapminder1
+
+```{r}
+my_gapminder_1962 <- gapminder1 %>% 
+  filter(country %in% have_gdpPercap_1962$country)
+dim(my_gapminder_1962)
+```
+```{r}
+# sjekker om det er noen NA
+sum(is.na(my_gapminder_1962))
+```
+
+Det er 1 manglende observasjon. Hvilken er dette?
+
+```{r}
+my_gapminder_1962 %>% 
+  filter(is.na(gdpPercap) == TRUE) %>% 
+  select(country, year)
+```
+
+gdpPercap mangler for Venezuela 2017, ellers har vi data for de 90 landene fra 1962 til 2017.
 
 ## 15 
 
-```{r , eval=FALSE, include=FALSE}
-my_gapminder_1962 %>% 
-  ggplot(my_gapminder_1962, mapping=aes(x=gdpPercap, y=lifeExp, size=pop, colour=continent)) +
-  geom_point()+
-  ggtitle("1962 Gap")+
-  
+```{r}
+# setter felles skal for de tre plotene slik at de kan sammelignes
+# stter legend bottom slik at plottet får bedre plass
+my_gapminder_1962 %>%
+  filter(year == "1962-01-01") %>% 
+  ggplot(my_gapminder_1962,
+    mapping = aes(
+      x = gdpPercap,
+      y = lifeExp,
+      size = pop,
+      colour = continent
+    )
+  ) +
+  geom_point() +
+  ggtitle("1962 Gap") +
+  coord_cartesian(ylim = c(38, 87), xlim = c(0,110000)) +
+  theme(legend.position = "bottom")
 ```
+
+Lag plottene for 1987 og 2017 etter samme mal
+
+Se løsningsforslag for hvordan plottene med log(gdpPercapita) kan fikses.
 
 ## 16
 

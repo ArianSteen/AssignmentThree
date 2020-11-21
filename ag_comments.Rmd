@@ -1,15 +1,19 @@
 ---
 title: "ag_comments"
-output: html_notebook
+output:
+  html_document:
+    df_print: paged
 ---
 
 # Kommentarer
 
-1.  Dere leser inn datafilen med en absolutt sti. Gjør at andre ikke kan generere dokumentet. Får feilmeldingen:
+1.  Håper at aglilleland har deltatt mer enn det som fremkommer av commit historien for det er heller skralt. En viktig del av disse øvingene er at dere skal lære å jobbe hver for dere og så synkronisere arbeidet vha. github.
+2.  Dere leser inn datafilen med en absolutt sti. Dette gjør at andre ikke kan generere dokumentet. Får feilmeldingen:
 
-```{=html}
 <!-- -->
-```
+
     Quitting from lines 80-83 (AssignmentThree3.Rmd) Error: 'C:/Users/ASCUSERADMIN/Documents/RMASTER/AssignmentThree/Data/ddf–gapminder–systema_globalis/ddf–entities–geo–country.csv' does not exist. Execution halted
 
-For å komme videre
+3.  Datasettet er ikke en del av prosjektet deres så dokumentet er ikke reproduserbart. Jeg har lagt til datasettet.
+4.  Jeg har prøvd å fikse slutten slik at dere har data for de 90 landene. Se løsningsforslag for resten.
+
