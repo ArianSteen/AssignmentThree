@@ -14,8 +14,7 @@ subtitle: HVL DS 2020
 
 ```{r setup}
 # include = FALSE her gjør at disse ikke blir lastet
-# Navnet setup gjør at denne blir kjørt først når vi kjører en 
-# code-chunck
+
 library(gapminder)
 library(knitr)
 library(tidyverse)
@@ -83,8 +82,7 @@ print(ddf_entities_geo_un_sdg_region)
 ```{r}
 # We use readr to load the csv file and then create a new continent variable called g_c
 g_c <- read_csv(file = "Data/ddf--gapminder--systema_globalis/ddf--entities--geo--country.csv")
-# Ser ut til å være en dobbel assigment. Hvorfor?
-# Print er unødvendig
+
 g_c # The print function pertaining to tibbles is useful in our case. 
 ```
 Above we have created a new variable with data from ddf_editites-geo-country.csv called g_c, this is unfiltered with the same data
@@ -186,7 +184,7 @@ We can see that the countries with the lowest life expectancies are Andorra,Domi
 ## 10 & 11 Reading in population
 
 ```{r}
-# Ny absolutt sti som jeg måtte fikse
+
 pop <- read_csv("Data/ddf--gapminder--systema_globalis/countries-etc-datapoints/ddf--datapoints--population_total--by--geo--time.csv",
 col_types = cols(time = col_date(format = "%Y")))
 
@@ -216,9 +214,7 @@ names(g_c)
  
  
 ```{r}
-# Dere kan ikke sette nytt navn på en variabel som ikke eksisterer
-# nytt_navn = eksisterende_navn
-# gdpPercap er navnet brukt i gapminder pakken
+
 g_c <- g_c %>% 
   select(-country) %>%  # country is 3 chr abbrivation
   rename("country" = name) %>% 
@@ -248,7 +244,7 @@ have_gdpPercap_1962 <- gapminder1 %>%
   filter(!is.na(gdpPercap)) %>% 
   select(country)
 
-dim(have_gdpPercap_1962)
+dim(have_gdpPercap_1962$country)
 ```
 Slik dere definere my_gapminder_1962 får dere bare med data fra 1962. Vi ønsker data fra 1962 opp til idag. I have_gdpPercap_1962 har vi nå navnene på de landene som hadde gdpPercap data i 1962. Plukker disse ut fra gapminder1
 
@@ -269,8 +265,16 @@ my_gapminder_1962 %>%
   filter(is.na(gdpPercap) == TRUE) %>% 
   select(country, year)
 ```
+```{r Venezuela}
+my_gapminder_venezuela <- gapminder1 %>% 
+  group_by(country) %>%
+  filter(country == "Venezuela") %>%
+  filter(!is.na(gdpPercap)) 
+  
+  my_gapminder_venezuela
+```
+ 
 
-gdpPercap mangler for Venezuela 2017, ellers har vi data for de 90 landene fra 1962 til 2017.
 
 ## 15 
 
@@ -293,9 +297,32 @@ my_gapminder_1962 %>%
   theme(legend.position = "bottom")
 ```
 
-Lag plottene for 1987 og 2017 etter samme mal
+```{r}
+my_gapminder_1987 <- gapminder1 %>% 
+  group_by(country) %>%
+  filter(year == "1987-01-01") %>%
+  filter(!is.na(gdpPercap)) 
+```
 
-Se løsningsforslag for hvordan plottene med log(gdpPercapita) kan fikses.
+```{r}
+my_gapminder_1987 %>%
+  ggplot(my_gampinder_1987, mapping = aes(x = gdpPercap, y = lifeExp, size = pop, colour = continent)) +
+  geom_point() 
+```
+
+```{r}
+my_gapminder_2017 <- gapminder1 %>% 
+  group_by(country) %>%
+  filter(year == "2017-01-01") %>%
+  filter(!is.na(gdpPercap)) 
+```
+
+```{r}
+my_gapminder_2017 %>%
+  ggplot(my_gampinder_2017, mapping = aes(x = gdpPercap, y = lifeExp, size = pop, colour = continent)) +
+  geom_point() 
+```
+
 
 ## 16
 
@@ -305,7 +332,15 @@ my_gapminder_1962 %>%
   geom_point()+
   coord_cartesian(xlim = c(5, 12), ylim = c(30, 100))
 ```
+```{r}
+my_gapminder_1987 %>%
+  ggplot(my_gampinder_1987, mapping = aes(x = log(gdpPercap), y = lifeExp, size = pop, colour = continent)) +
+  geom_point()+
+  coord_cartesian(xlim = c(5, 12), ylim = c(30, 100))
 
-## 17
-
-We know that asian countries have seen a significant improvement in life expectancy and gdp compared to most western countries, one could also expect higher life expectancy in richer countries
+my_gapminder_2017 %>%
+  ggplot(my_gampinder_2017, mapping = aes(x = log(gdpPercap), y = lifeExp, size = pop, colour = continent)) +
+  geom_point()+
+  coord_cartesian(xlim = c(5, 12), ylim = c(30, 100))
+```
+## 17 We know that asian countries have seen a significant improvement in life expectancy and gdp compared to most western countries, one could also expect higher life expectancy in richer countries
